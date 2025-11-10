@@ -55,7 +55,7 @@ async function carregarProdutos() {
                 <td>
                     <a href="${barcodeUrl}" download="${nomeArquivo}" class="btn-acao btn-download">Baixar</a>
                     <button class="btn-acao btn-imprimir" data-codigo="${produto.codigo_interno}">Imprimir</button>
-                    <button class="btn-acao btn-editar" data-id="${produto.id}">Editar</button>
+                    <a href="editar.html?id=${produto.id}" class="btn-acao btn-editar">Editar</a>
                     <button class="btn-acao btn-excluir" data-id="${produto.id}">Excluir</button>
                 </td>
             `;
