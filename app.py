@@ -1,7 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_cors import CORS
+from io import BytesIO # ### NOVO ###
+import barcode # ### NOVO ###
+from barcode.writer import SVGWriter # ### NOVO ###
+
 
 # Pega o caminho absoluto do diretório onde este arquivo está
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -11,9 +15,8 @@ app = Flask(__name__)
 CORS(app) # Habilita o CORS para a aplicação
 
 # --- Configuração do Banco de Dados ---
-# Define o caminho para o arquivo do banco de dados (será 'database.db' na mesma pasta)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desativa warnings desnecessários
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Inicializa a extensão do banco de dados com a app configurada
 db = SQLAlchemy(app)
@@ -23,7 +26,7 @@ class Produto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     codigo_interno = db.Column(db.String(50), unique=True)
-    codigo_barras = db.Column(db.String(100), unique=True)
+    # codigo_barras foi REMOVIDO
     descricao = db.Column(db.Text, nullable=True)
     quantidade = db.Column(db.Integer, default=0)
     localizacao = db.Column(db.String(100), nullable=True)
@@ -37,7 +40,7 @@ class Produto(db.Model):
             'id': self.id,
             'nome': self.nome,
             'codigo_interno': self.codigo_interno,
-            'codigo_barras': self.codigo_barras,
+            # codigo_barras foi REMOVIDO
             'descricao': self.descricao,
             'quantidade': self.quantidade,
             'localizacao': self.localizacao,
@@ -46,7 +49,6 @@ class Produto(db.Model):
             'fornecedor': self.fornecedor
         }
     
-    # Define como o objeto será exibido (útil para debug)
     def __repr__(self):
         return f'<Produto {self.nome}>'
 
@@ -70,7 +72,7 @@ def criar_produto():
     novo_produto = Produto(
         nome=dados['nome'],
         codigo_interno=dados.get('codigo_interno'),
-        codigo_barras=dados.get('codigo_barras'),
+        # codigo_barras foi REMOVIDO
         descricao=dados.get('descricao'),
         quantidade=dados.get('quantidade', 0),
         localizacao=dados.get('localizacao'),
@@ -115,7 +117,7 @@ def atualizar_produto(id_produto):
 
         produto.nome = dados.get('nome', produto.nome)
         produto.codigo_interno = dados.get('codigo_interno', produto.codigo_interno)
-        produto.codigo_barras = dados.get('codigo_barras', produto.codigo_barras)
+        # codigo_barras foi REMOVIDO
         produto.descricao = dados.get('descricao', produto.descricao)
         produto.quantidade = dados.get('quantidade', produto.quantidade)
         produto.localizacao = dados.get('localizacao', produto.localizacao)
@@ -145,11 +147,38 @@ def deletar_produto(id_produto):
 
 # --- Fim das Rotas da API ---
 
+### NOVO: Rota para GERAR CÓDIGO DE BARRAS ###
+@app.route('/api/barcode/<string:data>')
+def gerar_barcode(data):
+    try:
+        # Usamos o formato CODE128, que é versátil e aceita letras e números
+        EAN = barcode.get_barcode_class('code128')
+        
+        # Gera o código de barras
+        # 'writer' é para salvar como imagem (PNG, SVG)
+        codigo = EAN(data, writer=SVGWriter())
+        
+        # Salva a imagem em um "arquivo na memória" (BytesIO)
+        buffer_imagem = BytesIO()
+        # Usamos 'write_options' para SVG para não ter texto
+        codigo.write(buffer_imagem, options={"write_text": False}) 
+        buffer_imagem.seek(0) 
+
+        return send_file(
+            buffer_imagem,
+            mimetype='image/svg+xml',
+            as_attachment=True,  # ### NOVO: Força o download ###
+            download_name=f'{data}-barcode.svg' # ### NOVO: Define o nome do arquivo ###
+        )
+    except Exception as e:
+        return jsonify({'erro': f'Erro ao gerar código de barras: {str(e)}'}), 500
+
+# --- Fim das Rotas de Barcode ---
+
 
 if __name__ == '__main__':
     # Cria o banco de dados e tabelas (se não existirem) antes de rodar
     with app.app_context():
         db.create_all()
         
-    # debug=True faz o servidor reiniciar automaticamente quando você salvar o arquivo
     app.run(debug=True)

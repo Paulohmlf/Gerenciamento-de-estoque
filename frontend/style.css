@@ -40,3 +40,50 @@ button {
     border-radius: 4px;
     margin-right: 5px;
 }
+/* --- Estilos do Formulário --- */
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.btn-submit {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.btn-submit:hover {
+    background-color: #218838;
+}
+/* --- Estilos dos Botões de Ação na Tabela --- */
+.btn-acao {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 5px;
+    color: white;
+    text-decoration: none; /* Para links parecerem botões */
+    display: inline-block; /* Para links parecerem botões */
+    font-size: 12px;
+}
+
+.btn-editar { background-color: #ffc107; color: #333; }
+.btn-excluir { background-color: #dc3545; }
+.btn-download { background-color: #007bff; }
+.btn-imprimir { background-color: #17a2b8; }
