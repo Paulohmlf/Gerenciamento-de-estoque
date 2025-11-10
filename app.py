@@ -1,18 +1,21 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_cors import CORS
 
 # Pega o caminho absoluto do diretório onde este arquivo está
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+# --- Inicialização Principal ---
 app = Flask(__name__)
+CORS(app) # Habilita o CORS para a aplicação
 
 # --- Configuração do Banco de Dados ---
 # Define o caminho para o arquivo do banco de dados (será 'database.db' na mesma pasta)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desativa warnings desnecessários
 
-# Inicializa a extensão do banco de dados
+# Inicializa a extensão do banco de dados com a app configurada
 db = SQLAlchemy(app)
 
 # --- Definição dos Modelos (Tabelas) ---
