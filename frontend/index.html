@@ -1,38 +1,108 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Estoque</title>
+    <title>Minhas Peças - Sistema de Peças Automotivas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Gerenciamento de Estoque</h1>
+    <!-- Cabeçalho -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <h1 style="margin: 0; font-size: 1.8rem;">🔧 Controle de Peças Automotivas</h1>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">
+                    Olá, <strong id="nome-usuario-header">Usuário</strong>! Gerencie seu estoque de peças
+                </p>
+            </div>
+            <button onclick="fazerLogout()" class="btn-sair">
+                🚪 Sair
+            </button>
+        </div>
     </header>
 
-    <main>
-        <div class="header-lista">
-            <h2>Lista de Produtos</h2>
-            <a href="cadastro.html" class="btn-novo">+ Cadastrar Novo Produto</a>
+    <!-- Conteúdo Principal -->
+    <main style="max-width: 1200px; margin: 2rem auto; padding: 1rem;">
+        
+        <!-- Barra de Ações Superior -->
+        <div class="barra-acoes">
+            <div class="busca-container">
+                <input 
+                    type="text" 
+                    id="campo-busca" 
+                    class="campo-busca" 
+                    placeholder="🔍 Buscar peça pelo nome, código, categoria ou marca..."
+                    onkeyup="buscarProduto()"
+                >
+                <button onclick="limparBusca()" class="btn-limpar-busca" title="Limpar busca">✖️</button>
+            </div>
+            
+            <a href="cadastro.html" class="btn-adicionar">
+                ➕ Adicionar Nova Peça
+            </a>
         </div>
 
-        <table id="tabela-produtos">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Cód. Interno</th>
-                    <th>Quantidade</th>
-                    <th>Categoria</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="corpo-tabela-produtos">
-            </tbody>
-        </table>
+        <!-- Instruções de Ajuda -->
+        <div class="caixa-ajuda">
+            <strong>💡 Como usar:</strong>
+            <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+                <li>Clique em <strong style="color: #4CAF50;">"Adicionar Nova Peça"</strong> para cadastrar uma peça no estoque</li>
+                <li>Use a <strong style="color: #2196F3;">caixa de busca</strong> para encontrar peças por nome, código, categoria ou marca</li>
+                <li>Clique em <strong style="color: #FF9800;">Ver</strong> para ver todos os detalhes da peça</li>
+                <li>Clique em <strong style="color: #2196F3;">Editar</strong> para alterar informações da peça</li>
+                <li>Clique em <strong style="color: #f44336;">Excluir</strong> para remover do estoque</li>
+                <li>Clique em <strong style="color: #9C27B0;">Código</strong> para imprimir código de barras</li>
+            </ul>
+        </div>
+
+        <!-- Contador de Produtos -->
+        <div class="contador-produtos">
+            <span id="total-produtos">0</span> peça(s) cadastrada(s) no estoque
+        </div>
+
+        <!-- Tabela de Produtos -->
+        <div class="container-tabela">
+            <table class="tabela-produtos">
+                <thead>
+                    <tr>
+                        <th>🔧 Nome da Peça</th>
+                        <th>🔢 Código</th>
+                        <th>📂 Tipo/Categoria</th>
+                        <th>📊 Estoque</th>
+                        <th>📍 Localização</th>
+                        <th>💰 Preço</th>
+                        <th>🏢 Marca/Fabricante</th>
+                        <th style="min-width: 200px;">⚙️ Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela-produtos">
+                    <!-- Os produtos serão inseridos aqui pelo JavaScript -->
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 3rem;">
+                            <div class="carregando">
+                                ⏳ Carregando peças do estoque...
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Rodapé com informações -->
+        <div class="rodape-info">
+            <p>✅ Sistema atualizado em tempo real - Seu estoque sempre organizado!</p>
+            <p>🔧 Sistema para controle de peças automotivas</p>
+            <p>❓ Precisa de ajuda? Entre em contato com o administrador</p>
+        </div>
+
     </main>
 
     <script src="script.js"></script>
+    <script>
+        // Exibe o nome do usuário logado no header
+        document.getElementById('nome-usuario-header').textContent = 
+            localStorage.getItem('usuario') || 'Usuário';
+    </script>
 </body>
 </html>

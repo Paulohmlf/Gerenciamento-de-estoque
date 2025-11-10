@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário - Sistema de Produtos</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para a tela de registro */
+        .container-registro {
+            max-width: 450px;
+            margin: 80px auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-registro {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-registro h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo-registro p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .mensagem-erro {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+        }
+        
+        .mensagem-sucesso {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+        }
+        
+        .btn-registrar {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .btn-registrar:hover {
+            background-color: #45a049;
+        }
+        
+        .btn-registrar:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .link-login {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .link-login a {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .link-login a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Ícone de olho para mostrar/ocultar senha */
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .senha-forte {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            color: #666;
+        }
+        
+        .requisitos-senha {
+            background-color: #f5f5f5;
+            padding: 0.8rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .requisitos-senha ul {
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+        }
+        
+        .requisitos-senha li {
+            color: #666;
+            margin: 0.2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-registro">
+        <div class="logo-registro">
+            <h1>👤 Criar Nova Conta</h1>
+            <p>Preencha os dados para se cadastrar</p>
+        </div>
+        
+        <!-- Mensagens de feedback -->
+        <div id="mensagem-erro" class="mensagem-erro"></div>
+        <div id="mensagem-sucesso" class="mensagem-sucesso"></div>
+        
+        <!-- Formulário de Registro -->
+        <form id="form-registro">
+            <div class="form-group">
+                <label for="nome_completo">📝 Nome Completo:</label>
+                <input 
+                    type="text" 
+                    id="nome_completo" 
+                    name="nome_completo" 
+                    placeholder="Digite seu nome completo"
+                    required
+                    autofocus
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="usuario">👤 Nome de Usuário:</label>
+                <input 
+                    type="text" 
+                    id="usuario" 
+                    name="usuario" 
+                    placeholder="Escolha um nome de usuário"
+                    required
+                    autocomplete="username"
+                    minlength="3"
+                    maxlength="50"
+                >
+                <small style="color: #999; font-size: 0.8rem;">
+                    ℹ️ Mínimo 3 caracteres, sem espaços
+                </small>
+            </div>
+            
+            <div class="form-group">
+                <label for="senha">🔑 Senha:</label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        name="senha" 
+                        placeholder="Crie uma senha segura"
+                        required
+                        autocomplete="new-password"
+                        minlength="6"
+                    >
+                    <span class="toggle-password" onclick="toggleSenha('senha')">👁️</span>
+                </div>
+                <div class="requisitos-senha">
+                    <strong>Sua senha deve ter:</strong>
+                    <ul>
+                        <li>✔️ Mínimo de 6 caracteres</li>
+                        <li>✔️ Letras e números (recomendado)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmar_senha">🔒 Confirmar Senha:</label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        id="confirmar_senha" 
+                        name="confirmar_senha" 
+                        placeholder="Digite a senha novamente"
+                        required
+                        autocomplete="new-password"
+                        minlength="6"
+                    >
+                    <span class="toggle-password" onclick="toggleSenha('confirmar_senha')">👁️</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-registrar" id="btn-registrar">
+                Criar Conta
+            </button>
+        </form>
+        
+        <div class="link-login">
+            <p>Já tem uma conta? <a href="login.html">Faça login aqui</a></p>
+        </div>
+    </div>
+    
+    <script src="registro.js"></script>
+</body>
+</html>

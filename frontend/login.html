@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Produtos</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para a tela de login */
+        .container-login {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-login {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-login h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo-login p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .mensagem-erro {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+        }
+        
+        .mensagem-sucesso {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+        }
+        
+        .btn-login {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .btn-login:hover {
+            background-color: #45a049;
+        }
+        
+        .btn-login:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .link-ajuda {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .link-ajuda a {
+            color: #1976d2;
+            text-decoration: none;
+        }
+        
+        .link-ajuda a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Ícone de olho para mostrar/ocultar senha */
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-login">
+        <div class="logo-login">
+            <h1>🔐 Sistema de Produtos</h1>
+            <p>Faça login para continuar</p>
+        </div>
+        
+        <!-- Mensagens de feedback -->
+        <div id="mensagem-erro" class="mensagem-erro"></div>
+        <div id="mensagem-sucesso" class="mensagem-sucesso"></div>
+        
+        <!-- Formulário de Login -->
+        <form id="form-login">
+            <div class="form-group">
+                <label for="usuario">👤 Usuário:</label>
+                <input 
+                    type="text" 
+                    id="usuario" 
+                    name="usuario" 
+                    placeholder="Digite seu usuário"
+                    required 
+                    autocomplete="username"
+                    autofocus
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="senha">🔑 Senha:</label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        name="senha" 
+                        placeholder="Digite sua senha"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <span class="toggle-password" onclick="toggleSenha()">👁️</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-login" id="btn-entrar">
+                Entrar
+            </button>
+        </form>      
+        <div class="link-ajuda">
+            <p>Não tem uma conta? <a href="registro.html" style="color: #4CAF50; font-weight: bold;">Cadastre-se aqui</a></p>
+            <p style="margin-top: 0.5rem;">
+                Esqueceu sua senha? <a href="#">Clique aqui</a>
+            </p>
+            <p style="margin-top: 0.5rem; color: #999; font-size: 0.8rem;">
+                ℹ️ Para ajuda, entre em contato com o administrador
+            </p>
+        </div>
+    </div>
+    
+    <script src="login.js"></script>
+</body>
+</html>

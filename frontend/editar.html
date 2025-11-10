@@ -1,57 +1,301 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Produto - Gerenciamento</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>Editar Peça - Sistema de Peças</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Gerenciamento de Estoque</h1>
+    <!-- Cabeçalho -->
+    <header style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); padding: 1.5rem;">
+        <div style="max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <h1 style="margin: 0; font-size: 1.8rem;">✏️ Editar Informações da Peça</h1>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">
+                    Altere os dados que precisar e clique em Salvar
+                </p>
+            </div>
+            <div>
+                <a href="index.html" class="btn-voltar">
+                    ⬅️ Voltar para Lista
+                </a>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <a href="index.html">&larr; Voltar para a lista</a>
+    <!-- Conteúdo Principal -->
+    <main style="max-width: 900px; margin: 2rem auto; padding: 1rem;">
+        
+        <!-- Instruções de Ajuda -->
+        <div class="caixa-ajuda" style="margin-bottom: 2rem;">
+            <strong>💡 Dica:</strong> Altere apenas os campos que você deseja modificar. Os campos com <span style="color: #f44336;">★</span> são obrigatórios!
+        </div>
 
-        <h2>Editar Produto</h2>
+        <!-- Formulário de Edição -->
+        <div class="container-formulario">
+            <form id="form-edicao-produto">
+                
+                <!-- Seção 1: Informações Básicas -->
+                <div class="secao-formulario">
+                    <h2 class="titulo-secao">📝 Informações Básicas da Peça</h2>
+                    
+                    <div class="form-group">
+                        <label for="nome">
+                            🔧 Nome da Peça <span class="obrigatorio">★</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="nome" 
+                            name="nome" 
+                            placeholder="Ex: Pastilha de Freio Dianteira, Filtro de Óleo..."
+                            required
+                            class="input-grande"
+                        >
+                        <small class="dica-campo">Digite o nome completo da peça</small>
+                    </div>
 
-        <form id="form-edicao-produto">
-            <div class="form-group">
-                <label for="nome">Nome do Produto:</label>
-                <input type="text" id="nome" name="nome" required>
-            </div>
-            <div class="form-group">
-                <label for="codigo_interno">Código Interno:</label>
-                <input type="text" id="codigo_interno" name="codigo_interno">
-            </div>
-            <div class="form-group">
-                <label for="quantidade">Quantidade:</label>
-                <input type="number" id="quantidade" name="quantidade" value="0">
-            </div>
-            <div class="form-group">
-                <label for="preco">Preço (Ex: 10.50):</label>
-                <input type="number" step="0.01" id="preco" name="preco">
-            </div>
-            <div class="form-group">
-                <label for="categoria">Categoria:</label>
-                <input type="text" id="categoria" name="categoria">
-            </div>
-            <div class="form-group">
-                <label for="localizacao">Localização:</label>
-                <input type="text" id="localizacao" name="localizacao">
-            </div>
-            <div class="form-group">
-                <label for="fornecedor">Fornecedor:</label>
-                <input type="text" id="fornecedor" name="fornecedor">
-            </div>
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <textarea id="descricao" name="descricao" rows="3"></textarea>
-            </div>
-            
-            <button type="submit" class="btn-submit">Salvar Alterações</button>
-        </form>
+                    <div class="form-group">
+                        <label for="codigo_interno">
+                            🔢 Código da Peça
+                        </label>
+                        <input 
+                            type="text" 
+                            id="codigo_interno" 
+                            name="codigo_interno" 
+                            placeholder="Ex: PAS-001, FIL-123..."
+                            class="input-grande"
+                        >
+                        <small class="dica-campo">Código único para identificar a peça</small>
+                    </div>
+                </div>
+
+                <!-- Seção 2: Estoque e Preço -->
+                <div class="secao-formulario">
+                    <h2 class="titulo-secao">📊 Estoque e Valores</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quantidade">
+                                📊 Quantidade em Estoque <span class="obrigatorio">★</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                id="quantidade" 
+                                name="quantidade" 
+                                placeholder="0"
+                                min="0"
+                                required
+                                class="input-grande"
+                            >
+                            <small class="dica-campo">Quantas peças você tem?</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="preco">
+                                💰 Preço (R$)
+                            </label>
+                            <input 
+                                type="number" 
+                                id="preco" 
+                                name="preco" 
+                                placeholder="0.00"
+                                step="0.01"
+                                min="0"
+                                class="input-grande"
+                            >
+                            <small class="dica-campo">Preço de venda da peça</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3: Organização -->
+                <div class="secao-formulario">
+                    <h2 class="titulo-secao">📂 Organização e Origem</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="categoria">
+                                📂 Tipo de Peça / Categoria
+                            </label>
+                            <select 
+                                id="categoria" 
+                                name="categoria" 
+                                class="input-grande"
+                            >
+                                <option value="">Selecione uma categoria...</option>
+                                <optgroup label="🔧 Motor">
+                                    <option value="Filtros">Filtros (óleo, ar, combustível)</option>
+                                    <option value="Velas">Velas de ignição</option>
+                                    <option value="Correia">Correia dentada / Poly-V</option>
+                                    <option value="Óleo">Óleo de motor</option>
+                                    <option value="Radiador">Radiador / Sistema de arrefecimento</option>
+                                    <option value="Motor - Outros">Motor - Outras peças</option>
+                                </optgroup>
+                                <optgroup label="🚗 Suspensão e Direção">
+                                    <option value="Amortecedor">Amortecedor</option>
+                                    <option value="Mola">Mola / Kit suspensão</option>
+                                    <option value="Pivô">Pivô / Terminal de direção</option>
+                                    <option value="Barra">Barra estabilizadora</option>
+                                    <option value="Caixa direção">Caixa de direção</option>
+                                    <option value="Suspensão - Outros">Suspensão - Outras peças</option>
+                                </optgroup>
+                                <optgroup label="🛑 Freios">
+                                    <option value="Pastilha">Pastilha de freio</option>
+                                    <option value="Disco">Disco de freio</option>
+                                    <option value="Lona">Lona / Sapata de freio</option>
+                                    <option value="Cilindro">Cilindro de freio</option>
+                                    <option value="Freios - Outros">Freios - Outras peças</option>
+                                </optgroup>
+                                <optgroup label="⚡ Elétrica">
+                                    <option value="Bateria">Bateria</option>
+                                    <option value="Alternador">Alternador</option>
+                                    <option value="Motor arranque">Motor de arranque</option>
+                                    <option value="Sensor">Sensores diversos</option>
+                                    <option value="Lâmpadas">Lâmpadas</option>
+                                    <option value="Elétrica - Outros">Elétrica - Outras peças</option>
+                                </optgroup>
+                                <optgroup label="🔩 Carroceria e Acessórios">
+                                    <option value="Farol">Farol / Lanterna</option>
+                                    <option value="Retrovisor">Retrovisor</option>
+                                    <option value="Parachoque">Parachoque</option>
+                                    <option value="Vidro">Vidros</option>
+                                    <option value="Borracha">Borrachas / Vedações</option>
+                                    <option value="Carroceria - Outros">Carroceria - Outras peças</option>
+                                </optgroup>
+                                <optgroup label="🚙 Transmissão">
+                                    <option value="Embreagem">Embreagem (kit completo)</option>
+                                    <option value="Câmbio">Peças de câmbio</option>
+                                    <option value="Semi-eixo">Semi-eixo / Junta homocinética</option>
+                                    <option value="Transmissão - Outros">Transmissão - Outras peças</option>
+                                </optgroup>
+                                <optgroup label="🔊 Outros">
+                                    <option value="Pneu">Pneus</option>
+                                    <option value="Rodas">Rodas / Calotas</option>
+                                    <option value="Som">Som automotivo</option>
+                                    <option value="Acessórios">Acessórios diversos</option>
+                                    <option value="Outros">Outros</option>
+                                </optgroup>
+                            </select>
+                            <small class="dica-campo">Selecione o tipo de peça</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="localizacao">
+                                📍 Onde Está Guardada
+                            </label>
+                            <input 
+                                type="text" 
+                                id="localizacao" 
+                                name="localizacao" 
+                                placeholder="Ex: Prateleira A3, Gaveta 5..."
+                                list="localizacoes-sugeridas"
+                                class="input-grande"
+                            >
+                            <datalist id="localizacoes-sugeridas">
+                                <option value="Prateleira A">
+                                <option value="Prateleira B">
+                                <option value="Prateleira C">
+                                <option value="Gaveta 1">
+                                <option value="Gaveta 2">
+                                <option value="Gaveta 3">
+                                <option value="Estoque 1">
+                                <option value="Estoque 2">
+                                <option value="Depósito">
+                                <option value="Balcão">
+                            </datalist>
+                            <small class="dica-campo">Local físico onde a peça está</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fornecedor">
+                            🏢 Marca / Fabricante da Peça
+                        </label>
+                        <select 
+                            id="fornecedor" 
+                            name="fornecedor" 
+                            class="input-grande"
+                        >
+                            <option value="">Selecione a marca...</option>
+                            <optgroup label="🚗 Marcas de Veículos">
+                                <option value="Chevrolet">Chevrolet (GM)</option>
+                                <option value="Fiat">Fiat</option>
+                                <option value="Ford">Ford</option>
+                                <option value="Volkswagen">Volkswagen (VW)</option>
+                                <option value="Renault">Renault</option>
+                                <option value="Citroën">Citroën</option>
+                                <option value="Peugeot">Peugeot</option>
+                                <option value="Toyota">Toyota</option>
+                                <option value="Honda">Honda</option>
+                                <option value="Nissan">Nissan</option>
+                                <option value="Hyundai">Hyundai</option>
+                                <option value="Mitsubishi">Mitsubishi</option>
+                                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                <option value="BMW">BMW</option>
+                            </optgroup>
+                            <optgroup label="🔧 Fabricantes de Peças">
+                                <option value="Cofap">Cofap</option>
+                                <option value="Nakata">Nakata</option>
+                                <option value="TRW">TRW</option>
+                                <option value="Monroe">Monroe</option>
+                                <option value="Bosch">Bosch</option>
+                                <option value="NGK">NGK</option>
+                                <option value="Mann">Mann Filter</option>
+                                <option value="Tecfil">Tecfil</option>
+                                <option value="Mahle">Mahle</option>
+                                <option value="Mobil">Mobil</option>
+                                <option value="Castrol">Castrol</option>
+                                <option value="Original">Peça Original</option>
+                                <option value="Paralela">Peça Paralela</option>
+                            </optgroup>
+                            <optgroup label="➕ Outros">
+                                <option value="Universal">Universal (várias marcas)</option>
+                                <option value="Genérica">Genérica</option>
+                                <option value="Outros">Outros</option>
+                            </optgroup>
+                        </select>
+                        <small class="dica-campo">Marca do veículo ou fabricante da peça</small>
+                    </div>
+                    
+                    <!-- Campo para compatibilidade -->
+                    <div class="form-group">
+                        <label for="descricao">
+                            🚘 Compatibilidade / Modelos
+                        </label>
+                        <textarea 
+                            id="descricao" 
+                            name="descricao" 
+                            rows="3"
+                            placeholder="Ex: Compatível com Gol G5, G6, Voyage 2010-2020..."
+                            class="input-grande"
+                        ></textarea>
+                        <small class="dica-campo">Informe quais veículos/modelos usam esta peça</small>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="botoes-acao">
+                    <button type="button" onclick="window.location.href='index.html'" class="btn-cancelar">
+                        ❌ Cancelar
+                    </button>
+                    <button type="button" onclick="resetarFormulario()" class="btn-limpar">
+                        🔄 Desfazer Alterações
+                    </button>
+                    <button type="submit" class="btn-salvar">
+                        ✅ Salvar Alterações
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Ajuda Adicional -->
+        <div class="rodape-info" style="margin-top: 2rem;">
+            <p>💡 <strong>Lembre-se:</strong> As alterações só serão salvas após clicar em "Salvar Alterações"</p>
+            <p>❓ Dúvidas? Fale com o administrador do sistema</p>
+        </div>
+
     </main>
 
     <script src="editar.js"></script>
